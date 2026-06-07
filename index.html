@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YourFrame — Luxury Photo Frame Studio</title>
+  <meta name="description" content="YourFrame — Upload your photo, choose a frame, adjust, and download. A luxury photo framing studio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════ TOP BAR ═══════════ -->
+  <header id="topbar" role="banner">
+
+    <div class="topbar-left">
+      <div class="zoom-group" aria-label="Zoom controls">
+        <button class="icon-btn" id="btn-zoom-out" title="Zoom out (Ctrl -)">
+          <svg width="10" height="2" viewBox="0 0 10 2"><path d="M0 1h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <span class="zoom-label" id="zoom-label">100%</span>
+        <button class="icon-btn" id="btn-zoom-in" title="Zoom in (Ctrl +)">
+          <svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0v10M0 5h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon-btn fit-text" id="btn-zoom-fit" title="Fit to view (Ctrl 0)">FIT</button>
+      </div>
+    </div>
+
+    <div class="topbar-center">
+      <a href="#" class="topbar-logo" id="logo-link">Your<span>Frame</span></a>
+      <p class="topbar-tagline">Luxury Frame Studio</p>
+    </div>
+
+    <div class="topbar-right">
+      <span class="topbar-status" id="status-text">Upload a photo to begin</span>
+      <button id="btn-download" disabled aria-label="Download framed image (Ctrl S)">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M6 1v7M3 6l3 3 3-3M1 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Download
+      </button>
+    </div>
+
+  </header>
+
+
+  <!-- ═══════════ APP BODY ═══════════ -->
+  <div id="app-body">
+
+    <!-- ── SIDEBAR ── -->
+    <aside id="sidebar" role="complementary" aria-label="Editor controls">
+      <div id="sidebar-scroll">
+
+        <!-- Panel 1 · Photo -->
+        <div class="panel" id="panel-upload">
+          <div class="panel-header">
+            <span class="panel-title">
+              <span class="step-badge">1</span> Photo
+            </span>
+          </div>
+
+          <div id="upload-zone" tabindex="0" role="button" aria-label="Upload photo — click or drag and drop">
+            <input type="file" id="photo-input" accept="image/*" aria-label="Choose a photo" />
+            <svg class="upload-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <rect x="4" y="4" width="32" height="32" rx="5" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M20 26V14M14 20l6-6 6 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 30l5-5 3 3 4-5 5 7" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity=".4"/>
+            </svg>
+            <strong>Drop photo here</strong>
+            <p>or click to browse · JPG, PNG, WebP</p>
+          </div>
+
+          <div id="photo-preview-strip">
+            <img id="photo-thumb" src="" alt="Your uploaded photo" />
+            <div class="change-overlay" role="button" tabindex="0" aria-label="Change photo">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              Change Photo
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Panel 2 · Frames -->
+        <div class="panel" id="panel-frames">
+          <div class="panel-header">
+            <span class="panel-title">
+              <span class="step-badge">2</span> Frames
+            </span>
+            <span id="frame-count" class="frame-count-badge">0</span>
+          </div>
+
+          <div class="frames-grid" id="frames-grid" role="radiogroup" aria-label="Select a frame">
+
+            <!-- None option -->
+            <div class="frame-thumb frame-thumb-none selected" id="frame-none"
+                 data-frame-id="none" role="radio" aria-checked="true" aria-label="No frame" tabindex="0">
+              <div class="frame-thumb-inner">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.1"/>
+                  <path d="M7 11h8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <span class="frame-label">None</span>
+            </div>
+
+            <!-- Dynamic preset frames inserted by JS here -->
+
+            <!-- Add custom frame -->
+            <div class="frame-thumb frame-thumb-add" tabindex="0" role="button" aria-label="Upload a custom frame">
+              <input type="file" id="custom-frame-input" accept="image/*" multiple aria-label="Upload custom frame images" />
+              <div class="frame-thumb-inner">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <path d="M9 2v14M2 9h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <span class="frame-label">Add Frame</span>
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- Panel 3 · Adjustments -->
+        <div class="panel" id="panel-adj">
+          <div class="panel-header">
+            <span class="panel-title">
+              <span class="step-badge">3</span> Adjustments
+            </span>
+            <button id="btn-reset" class="reset-btn" aria-label="Reset all adjustments">Reset</button>
+          </div>
+
+          <!-- ·· Photo section ·· -->
+          <div class="adj-section-label">Photo Transform</div>
+
+          <div class="adj-row" title="How the photo fills the canvas">
+            <span class="adj-label">Fit</span>
+            <div class="seg-group" role="group" aria-label="Photo fit mode">
+              <button class="seg-btn active" data-fit="cover"   aria-pressed="true">Cover</button>
+              <button class="seg-btn"         data-fit="contain" aria-pressed="false">Contain</button>
+            </div>
+          </div>
+
+          <div class="adj-row">
+            <span class="adj-label">Scale</span>
+            <input type="range" id="adj-scale" min="20" max="300" value="100" step="1" aria-label="Photo scale" />
+            <span class="adj-val" id="val-scale">100%</span>
+          </div>
+
+          <div class="adj-row">
+            <span class="adj-label">X Offset</span>
+            <input type="range" id="adj-x" min="-100" max="100" value="0" step="1" aria-label="Photo horizontal offset" />
+            <span class="adj-val" id="val-x">0%</span>
+          </div>
+
+          <div class="adj-row">
+            <span class="adj-label">Y Offset</span>
+            <input type="range" id="adj-y" min="-100" max="100" value="0" step="1" aria-label="Photo vertical offset" />
+            <span class="adj-val" id="val-y">0%</span>
+          </div>
+
+          <div class="adj-row">
+            <span class="adj-label">Rotation</span>
+            <input type="range" id="adj-rotation" min="-180" max="180" value="0" step="1" aria-label="Photo rotation" />
+            <span class="adj-val" id="val-rotation">0°</span>
+          </div>
+
+          <!-- ·· Frame section ·· -->
+          <div class="adj-section-label">Frame</div>
+
+          <div class="adj-row">
+            <span class="adj-label">Opacity</span>
+            <input type="range" id="adj-opacity" min="0" max="100" value="100" step="1" aria-label="Frame opacity" />
+            <span class="adj-val" id="val-opacity">100%</span>
+          </div>
+
+          <!-- ·· Output section ·· -->
+          <div class="adj-section-label">Output</div>
+
+          <div class="adj-row">
+            <span class="adj-label">Resolution</span>
+            <div class="seg-group" role="group" aria-label="Output resolution">
+              <button class="seg-btn active" data-size="original" aria-pressed="true">Orig</button>
+              <button class="seg-btn"         data-size="1080"    aria-pressed="false">1080p</button>
+              <button class="seg-btn"         data-size="2k"      aria-pressed="false">2K</button>
+            </div>
+          </div>
+
+          <div class="adj-row">
+            <span class="adj-label">Format</span>
+            <div class="seg-group" role="group" aria-label="Output file format">
+              <button class="seg-btn active" data-fmt="png"  aria-pressed="true">PNG</button>
+              <button class="seg-btn"         data-fmt="jpg"  aria-pressed="false">JPG</button>
+              <button class="seg-btn"         data-fmt="webp" aria-pressed="false">WebP</button>
+            </div>
+          </div>
+
+          <!-- drag hint -->
+          <p class="drag-hint">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+              <path d="M5.5 1v9M1 5.5h9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            Drag photo on canvas to reposition
+          </p>
+
+        </div>
+
+      </div><!-- /sidebar-scroll -->
+    </aside>
+
+
+    <!-- ── CANVAS AREA ── -->
+    <main id="canvas-area" role="main" aria-label="Preview canvas">
+
+      <div id="empty-state" aria-live="polite" aria-atomic="true">
+        <svg class="empty-icon" viewBox="0 0 72 72" fill="none" aria-hidden="true">
+          <rect x="8" y="8" width="56" height="56" rx="8" stroke="currentColor" stroke-width="1.1"/>
+          <rect x="18" y="18" width="36" height="36" rx="4" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
+          <circle cx="28" cy="30" r="3" fill="currentColor" opacity=".4"/>
+          <path d="M18 46l10-10 7 7 6-8 11 11" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity=".4"/>
+        </svg>
+        <h2>Your canvas is empty</h2>
+        <p>Upload a photo from the sidebar<br>to start framing</p>
+      </div>
+
+      <div id="canvas-wrapper">
+        <canvas id="preview-canvas" class="hidden" aria-label="Preview of your framed photo"></canvas>
+      </div>
+
+    </main>
+
+  </div><!-- /app-body -->
+
+
+  <!-- ═══════════ FOOTER STATUS BAR ═══════════ -->
+  <footer id="canvas-footer" role="contentinfo">
+    <div class="footer-left">
+      <span class="meta-item">Size <span class="meta-val" id="meta-dims">—</span></span>
+      <span class="meta-sep">·</span>
+      <span class="meta-item">Frame <span class="meta-val" id="meta-frame">None</span></span>
+    </div>
+    <div class="steps-strip" aria-label="Progress steps">
+      <div class="step" id="step-1"><span class="step-dot"></span>Upload</div>
+      <span class="step-arr">→</span>
+      <div class="step" id="step-2"><span class="step-dot"></span>Frame</div>
+      <span class="step-arr">→</span>
+      <div class="step" id="step-3"><span class="step-dot"></span>Download</div>
+    </div>
+  </footer>
+
+
+  <!-- TOASTS -->
+  <div id="toast-container" aria-live="assertive" role="alert"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
