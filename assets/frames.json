@@ -1,0 +1,14 @@
+[
+  {
+    "id": "preset-frame-1",
+    "name": "Frame 1",
+    "src": "assets/frame-1.png",
+    "order": 0
+  },
+  {
+    "id": "preset-frame-2",
+    "name": "Frame 2",
+    "src": "assets/frame-2.png",
+    "order": 1
+  }
+]

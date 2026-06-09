@@ -1,38 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
-const IMAGE_EXTS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.gif']);
-
-function getAssetsDir() {
-  const runtimeCandidate = path.join(__dirname, '..', '..', 'assets');
-  const cwdCandidate = path.join(process.cwd(), 'assets');
-
-  if (fs.existsSync(runtimeCandidate)) return runtimeCandidate;
-  if (fs.existsSync(cwdCandidate)) return cwdCandidate;
-  return runtimeCandidate;
-}
-
-const ASSETS_DIR = getAssetsDir();
-
-function toDisplayName(filename) {
-  return path.basename(filename, path.extname(filename))
-    .replace(/[-_]/g, ' ')
-    .replace(/\b\w/g, c => c.toUpperCase());
-}
+const FRAMES_MANIFEST = path.join(__dirname, '..', '..', 'assets', 'frames.json');
 
 function getFrames() {
   try {
-    return fs.readdirSync(ASSETS_DIR)
-      .filter(file => IMAGE_EXTS.has(path.extname(file).toLowerCase()))
-      .sort()
-      .map((file, index) => ({
-        id: 'preset-' + path.basename(file, path.extname(file)),
-        name: toDisplayName(file),
-        src: 'assets/' + file,
-        order: index,
-      }));
+    const raw = fs.readFileSync(FRAMES_MANIFEST, 'utf8');
+    return JSON.parse(raw);
   } catch (error) {
-    console.error('Failed to load assets for Netlify function:', error.message);
+    console.error('Failed to load frames manifest for Netlify function:', error.message);
     return [];
   }
 }

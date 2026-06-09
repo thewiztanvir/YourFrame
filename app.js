@@ -327,12 +327,17 @@ async function loadPresetFrames() {
     if (!res.ok) throw new Error('Server error');
     presets = await res.json();
   } catch {
-    // Server not running — show a soft hint
-    const hint = document.createElement('p');
-    hint.className = 'drag-hint';
-    hint.style.cssText = 'color:var(--gold-mid); margin-top:0; font-size:0.68rem;';
-    hint.textContent = '⚠ Run node server.js to auto-load frames from /assets/';
-    document.getElementById('panel-frames').appendChild(hint);
+    try {
+      const res = await fetch('/assets/frames.json');
+      if (!res.ok) throw new Error('Static manifest missing');
+      presets = await res.json();
+    } catch {
+      const hint = document.createElement('p');
+      hint.className = 'drag-hint';
+      hint.style.cssText = 'color:var(--gold-mid); margin-top:0; font-size:0.68rem;';
+      hint.textContent = '⚠ Run node server.js to auto-load frames from /assets/ or deploy with the supported static config.';
+      document.getElementById('panel-frames').appendChild(hint);
+    }
   }
 
   for (const f of presets) {
