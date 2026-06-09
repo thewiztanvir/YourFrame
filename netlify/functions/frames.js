@@ -1,8 +1,18 @@
 const fs = require('fs');
 const path = require('path');
 
-const ASSETS_DIR = path.join(__dirname, '..', '..', 'assets');
 const IMAGE_EXTS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.gif']);
+
+function getAssetsDir() {
+  const runtimeCandidate = path.join(__dirname, '..', '..', 'assets');
+  const cwdCandidate = path.join(process.cwd(), 'assets');
+
+  if (fs.existsSync(runtimeCandidate)) return runtimeCandidate;
+  if (fs.existsSync(cwdCandidate)) return cwdCandidate;
+  return runtimeCandidate;
+}
+
+const ASSETS_DIR = getAssetsDir();
 
 function toDisplayName(filename) {
   return path.basename(filename, path.extname(filename))
@@ -22,6 +32,7 @@ function getFrames() {
         order: index,
       }));
   } catch (error) {
+    console.error('Failed to load assets for Netlify function:', error.message);
     return [];
   }
 }
