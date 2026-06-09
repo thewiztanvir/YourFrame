@@ -15,17 +15,17 @@
 
   --gold-faint:      rgba(180,130,60,0.08);
   --gold-dim:        #4e3519;
-  --gold-mid:        #7a5228;
-  --gold-warm:       #a87038;
-  --gold-bright:     #c98b4a;
-  --gold-light:      #e0a96a;
+  --gold-mid:        #9a6a38;
+  --gold-warm:       #b87a42;
+  --gold-bright:     #d49555;
+  --gold-light:      #e8b478;
   --gold-glow:       rgba(200,140,70,0.18);
 
   --cream:           #ece3d2;
   --cream-soft:      #c8b898;
-  --cream-muted:     #8a7055;
-  --cream-dim:       #4e3d2a;
-  --cream-faint:     #2a1e12;
+  --cream-muted:     #a89070;
+  --cream-dim:       #8a7560;
+  --cream-faint:     #6b5a48;
 
   --border-hair:     rgba(180,130,55,0.10);
   --border-subtle:   rgba(180,130,55,0.16);
@@ -827,6 +827,29 @@ input[type="range"]:focus { outline: none; }
 .meta-sep {
   color: var(--cream-faint);
   font-size: 0.65rem;
+}
+
+/* Developer credit */
+.dev-credit {
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.dev-name {
+  color: var(--gold-bright);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+.dev-name:hover {
+  color: var(--gold-light);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-shadow: 0 0 8px rgba(200, 140, 70, 0.4);
 }
 
 /* Steps strip */

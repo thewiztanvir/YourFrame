@@ -11,6 +11,8 @@ YourFrame is designed to reduce turnaround time for framed imagery and maintain 
 - photographers creating finished presentation mockups
 - brand teams reviewing frame styles in a local environment
 
+🔗 **Live Demo:** [yourframeapp.netlify.app](https://yourframeapp.netlify.app/)
+
 ## What it does
 
 YourFrame combines a responsive interface with precise composition tools:
@@ -47,8 +49,6 @@ Open:
 ```text
 http://localhost:3000
 ```
-
-Live demo: https://yourframeapp.netlify.app/
 
 If you prefer, `index.html` can also be opened directly in the browser. The local server is required only to populate the frame gallery from `assets/`.
 
