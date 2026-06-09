@@ -322,20 +322,24 @@ function updateFrameCount() {
 ═══════════════════════════════════════════════════════════════════ */
 async function loadPresetFrames() {
   let presets = [];
+
   try {
-    const res = await fetch('/api/frames');
-    if (!res.ok) throw new Error('Server error');
-    presets = await res.json();
+    const manifest = await fetch('/assets/frames.json');
+    if (manifest.ok) {
+      presets = await manifest.json();
+    } else {
+      throw new Error('Static manifest missing');
+    }
   } catch {
     try {
-      const res = await fetch('/assets/frames.json');
-      if (!res.ok) throw new Error('Static manifest missing');
+      const res = await fetch('/api/frames');
+      if (!res.ok) throw new Error('Server error');
       presets = await res.json();
     } catch {
       const hint = document.createElement('p');
       hint.className = 'drag-hint';
       hint.style.cssText = 'color:var(--gold-mid); margin-top:0; font-size:0.68rem;';
-      hint.textContent = '⚠ Run node server.js to auto-load frames from /assets/ or deploy with the supported static config.';
+      hint.textContent = '⚠ Run node server.js to auto-load frames from /assets/ or deploy with supported functions/config.';
       document.getElementById('panel-frames').appendChild(hint);
     }
   }
