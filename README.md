@@ -1,185 +1,124 @@
 # YourFrame
 
-> A luxury, browser-based photo framing studio. Upload your photo, choose a frame, adjust, and download — all in real time.
+YourFrame is a local photo framing studio built for creative teams and studios that need fast visual previews with a polished presentation. It delivers a compact, browser-based workflow that lets you frame, adjust, and export images without a build system, external dependencies, or cloud services.
 
----
+## Why YourFrame
 
-## Overview
+YourFrame is designed to reduce turnaround time for framed imagery and maintain visual control over every export. It is ideal for:
 
-**YourFrame** is a lightweight, client-side photo frame editor with a luxury dark studio aesthetic. It requires no external frameworks, no package manager, and no cloud dependency. A small Node.js server enables automatic frame discovery from your local `assets/` folder.
+- creative directors previewing product photography
+- designers producing marketing assets and social posts
+- photographers creating finished presentation mockups
+- brand teams reviewing frame styles in a local environment
 
----
+## What it does
 
-## Features
+YourFrame combines a responsive interface with precise composition tools:
 
-- **Live Canvas Compositor** — Photo and frame are merged in real time on an HTML5 Canvas
-- **Automatic Frame Loading** — Drop any image into `assets/` and it appears as a selectable frame on refresh
-- **Custom Frame Upload** — Add frames directly from the app without touching the filesystem
-- **Full Photo Adjustments** — Scale, X/Y offset, rotation, fit mode (Cover / Contain)
-- **Frame Opacity Control** — Blend frame overlays at any transparency level
-- **Drag to Reposition** — Drag the photo on the canvas to pan it under the frame
-- **Zoom Controls** — Scroll-to-zoom, fit-to-view, and manual zoom buttons
-- **Output Options** — Export at original resolution, 1080p, or 2K in PNG, JPG, or WebP
-- **Keyboard Shortcuts** — `Ctrl+S` to download, `Ctrl+±` to zoom, `Ctrl+0` to fit
-- **Zero Dependencies** — Server uses only Node.js built-in modules (`http`, `fs`, `path`)
-- **Luxury Aesthetic** — Dark warm-brown theme, Crimson Pro + DM Sans typography, CSS grain texture
+- Render photo and frame overlays live on an HTML5 canvas
+- Auto-discover frame assets in the local `assets/` folder
+- Upload custom frames on demand during a session
+- Adjust photo scale, alignment, rotation, and fit mode
+- Control frame opacity for subtle or fully opaque overlays
+- Export high-quality images in PNG, JPG, or WebP
+- Choose output size: original, 1080p, or 2K
 
----
+## What makes it different
 
-## Project Structure
+- Local-first workflow: works without external services or package installs
+- Lightweight codebase: no frameworks, minimal Node.js server
+- Practical by design: predictable export behavior, direct frame management, and fast iteration
+- Portfolio-ready UI: a refined dark studio aesthetic with clear controls and responsive behavior
+
+## System requirements
+
+- Node.js v16 or later for local asset discovery
+- Modern desktop browser: Chrome, Firefox, Edge, Safari
+
+## Install and run
+
+```bash
+cd YourFrame
+node server.js
+```
+
+Open:
+
+```text
+http://localhost:3000
+```
+
+If you prefer, `index.html` can also be opened directly in the browser. The server is required only to populate the frame gallery from `assets/`.
+
+## Workflow
+
+1. Upload a source photo using the sidebar or drag-and-drop onto the canvas.
+2. Select a frame from the gallery.
+3. Use the adjustment controls to position and scale the image.
+4. Fine-tune opacity and fit mode.
+5. Choose a resolution and file format.
+6. Export the finished composition.
+
+## Project structure
 
 ```
 YourFrame/
-├── index.html      # Markup — clean, semantic HTML
-├── style.css       # All styles — luxury dark theme, grain texture, layout
-├── app.js          # All logic — canvas engine, adjustments, drag, zoom, download
-├── server.js       # Tiny Node.js dev server — auto-discovers frames in /assets
-└── assets/
-    ├── frame-1.png # Pre-loaded frame
-    ├── frame-2.png # Pre-loaded frame
-    └── ...         # ← drop more frames here
+├── index.html   # UI and application shell
+├── style.css    # Visual system, layout, theme styling
+├── app.js       # Canvas rendering, controls, export logic
+├── server.js    # Minimal asset discovery server
+└── assets/      # Frame image library
 ```
 
----
+## Adding frames
 
-## Getting Started
+### Filesystem frames
 
-### Prerequisites
+Drop `.png`, `.jpg`, or `.webp` files into `assets/`. Reload the page to make them available in the frame selector.
 
-- [Node.js](https://nodejs.org/) v16 or later
-- A modern browser (Chrome, Firefox, Edge, Safari)
+### Runtime frame upload
 
-### Run
+Use the app’s frame upload action to preview custom overlays during the current session.
 
-```bash
-# 1. Clone or download the project
-cd YourFrame
+## Keyboard shortcuts
 
-# 2. Start the dev server (no npm install needed)
-node server.js
+- `Ctrl + S` — Download current composition
+- `Ctrl + +` — Zoom in
+- `Ctrl + -` — Zoom out
+- `Ctrl + 0` — Fit canvas to view
 
-# 3. Open in your browser
-# → http://localhost:3000
-```
+## Adjustment controls
 
-> **Note:** You can also open `index.html` directly in a browser — the app works offline. The server is only required for automatic frame discovery from `assets/`.
+- Fit: Cover / Contain
+- Scale: 20%–300%
+- X Offset: −100% to +100%
+- Y Offset: −100% to +100%
+- Rotation: −180° to +180°
+- Frame Opacity: 0%–100%
+- Output Resolution: Original / 1080p / 2K
+- Output Format: PNG / JPG / WebP
 
----
+## API
 
-## Adding Frames
+The local Node.js server exposes one endpoint:
 
-There are two ways to add frames:
-
-### Option 1 — Drop into assets folder *(recommended)*
-
-1. Copy any `.png`, `.jpg`, or `.webp` image into the `assets/` folder
-2. Refresh `http://localhost:3000`
-3. The new frame appears automatically in the sidebar — no code changes needed
-
-```
-assets/
-├── frame-1.png       ✓ already there
-├── frame-2.png       ✓ already there
-└── my-new-frame.png  ← just drop it here
-```
-
-### Option 2 — Upload from the app
-
-Click the **`+ Add Frame`** tile in the sidebar to upload any image as a frame at runtime. It persists for the current session.
-
----
-
-## How to Use
-
-| Step | Action |
-|------|--------|
-| **1** | Upload your photo — drag & drop anywhere on the canvas, or click the upload zone in the sidebar |
-| **2** | Select a frame from the grid — or choose **None** to export photo-only |
-| **3** | Use the **Adjustments** panel to dial in scale, position, rotation, and frame opacity |
-| **4** | Drag the photo directly on the canvas to pan it under the frame |
-| **5** | Choose your output resolution and format, then click **Download** |
-
----
-
-## Keyboard Shortcuts
-
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl + S` | Download framed image |
-| `Ctrl + +` | Zoom in |
-| `Ctrl + -` | Zoom out |
-| `Ctrl + 0` | Fit canvas to view |
-
----
-
-## Adjustments Reference
-
-| Control | Range | Description |
-|---------|-------|-------------|
-| **Fit** | Cover / Contain | How the photo fills the canvas — cover crops, contain letterboxes |
-| **Scale** | 20% – 300% | Zoom the photo independently of canvas zoom |
-| **X Offset** | −100% – +100% | Shift photo left or right |
-| **Y Offset** | −100% – +100% | Shift photo up or down |
-| **Rotation** | −180° – +180° | Rotate the photo |
-| **Frame Opacity** | 0% – 100% | Blend the frame overlay |
-| **Resolution** | Original / 1080p / 2K | Output canvas size |
-| **Format** | PNG / JPG / WebP | Output file format |
-
-Click **Reset** to restore all adjustments to default.
-
----
-
-## Design
-
-- **Background** — Near-black warm brown (`#0c0906`)
-- **Text** — Soft cream (`#ece3d2`)
-- **Accent** — Muted amber gold (`#c98b4a`)
-- **Heading font** — [Crimson Pro](https://fonts.google.com/specimen/Crimson+Pro) — italic, serif
-- **Body font** — [DM Sans](https://fonts.google.com/specimen/DM+Sans) — light weight, clean
-- **Texture** — CSS grain noise via `body::before` pseudo-element using an inline SVG `feTurbulence` filter
-
----
-
-## API Reference
-
-The Node server exposes one endpoint:
-
-```
+```http
 GET /api/frames
 ```
 
-Returns a JSON array of all image files found in `assets/`:
+It returns a JSON list of frame assets from `assets/` and serves static project files.
 
-```json
-[
-  { "id": "preset-frame-1", "name": "Frame 1", "src": "assets/frame-1.png", "order": 0 },
-  { "id": "preset-frame-2", "name": "Frame 2", "src": "assets/frame-2.png", "order": 1 }
-]
-```
+## Browser support
 
-All other requests are served as static files from the project root.
-
----
-
-## Browser Support
-
-| Browser | Support |
-|---------|---------|
-| Chrome 90+ | ✅ Full |
-| Firefox 88+ | ✅ Full |
-| Edge 90+ | ✅ Full |
-| Safari 15+ | ✅ Full |
-
----
+- Chrome 90+
+- Firefox 88+
+- Edge 90+
+- Safari 15+
 
 ## License
 
-This project is released for personal and educational use.
+This project is provided for personal and educational use.
 
----
+## Author
 
-## Built by
-
-**Mitab Sany**
-
-Designed and developed from scratch — layout, canvas engine, server, and aesthetic — as part of the YourFrame creative studio project.
+Designed and developed by Mitab Sany.
