@@ -48,7 +48,28 @@ Open:
 http://localhost:3000
 ```
 
-If you prefer, `index.html` can also be opened directly in the browser. The server is required only to populate the frame gallery from `assets/`.
+Live demo: https://yourframeapp.netlify.app/
+
+If you prefer, `index.html` can also be opened directly in the browser. The local server is required only to populate the frame gallery from `assets/`.
+
+## Deployment
+
+### Vercel
+
+This project supports Vercel with a serverless endpoint at `/api/frames`.
+
+- No build command is required.
+- Choose `Framework Preset: Other`.
+- Keep the root at the repository root.
+- `api/frames.js` is the Vercel function that provides the frame list.
+
+### Netlify
+
+Netlify is supported via a function at `netlify/functions/frames.js`.
+
+- `netlify.toml` routes `/api/frames` to `/.netlify/functions/frames`.
+- No build command is required.
+- Keep publish directory set to the project root.
 
 ## Workflow
 
@@ -63,11 +84,15 @@ If you prefer, `index.html` can also be opened directly in the browser. The serv
 
 ```
 YourFrame/
-├── index.html   # UI and application shell
-├── style.css    # Visual system, layout, theme styling
-├── app.js       # Canvas rendering, controls, export logic
-├── server.js    # Minimal asset discovery server
-└── assets/      # Frame image library
+├── api/frames.js                 # Vercel serverless function
+├── netlify/functions/frames.js   # Netlify serverless function
+├── vercel.json                   # Vercel routing config
+├── netlify.toml                  # Netlify build + redirect config
+├── index.html                    # UI and application shell
+├── style.css                     # Visual system, layout, theme styling
+├── app.js                        # Canvas rendering, controls, export logic
+├── server.js                     # Local development asset server
+└── assets/                       # Frame image library
 ```
 
 ## Adding frames
